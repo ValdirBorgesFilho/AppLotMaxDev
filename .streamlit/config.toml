@@ -2,6 +2,7 @@
 enableCORS = false
 enableXsrfProtection = false
 maxUploadSize = 10
+enableWebsocketCompression = false
 
 [theme]
 primaryColor = "#d33682"
