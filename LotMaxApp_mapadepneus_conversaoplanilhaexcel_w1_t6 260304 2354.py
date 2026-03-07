@@ -78,8 +78,7 @@ def estilo_idioma_uploader():
         <style>
             /* 1. O PAI: Remove bordas e zera a fonte original */
             button[data-testid="stBaseButton-secondary"] {
-                content: "TXT_BOTAO";
-                font-size: 14px !important;
+                font-size: 0px !important;
                 width: 100% !important;
                 background-color: transparent !important;
                 border: none !important;
@@ -371,3 +370,4 @@ if uploaded_file:
 
 else:
     st.info("Aguardando upload do arquivo Excel ou ODS...")
+
