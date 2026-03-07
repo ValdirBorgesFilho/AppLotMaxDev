@@ -132,7 +132,6 @@ def estilo_idioma_uploader():
 
     st.markdown(css_final, unsafe_allow_html=True)
 
-
 # --- 4. CSS ---
 st.markdown("""
 <style>
@@ -356,5 +355,6 @@ if uploaded_file:
 
 else:
     st.info("Aguardando upload do arquivo Excel ou ODS...")
+
 
 
