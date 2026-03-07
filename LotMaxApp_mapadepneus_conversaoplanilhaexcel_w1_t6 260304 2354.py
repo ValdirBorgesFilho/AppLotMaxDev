@@ -71,72 +71,58 @@ def estilo_idioma_uploader():
     config = {
         "button": "📁 Selecionar arquivo",
         "instructions": "Arraste seu arquivo aqui.",
-        "limits": "Limite de 200MB"
+        "limits": "Limite de 20MB • XLSX, XLS, ODS"
     }
 
     css_template = """
-        <style>
-            /* 1. O PAI: Remove bordas e zera a fonte original */
-            button[data-testid="stBaseButton-secondary"] {
-                font-size: 0px !important;
-                width: 100% !important;
-                background-color: transparent !important;
-                border: none !important;
-                position: relative !important;
-                height: 38px !important;
-                display: flex !important;
-                justify-content: center !important;
-                align-items: center !important;
-                padding: 0 !important;
-            }
+    <style>
+        /* 1. TRADUZ O BOTÃO (Browse files) */
+        /* Esconde o texto nativo e prepara o espaço */
+        button[data-testid="stBaseButton-secondary"] {
+            font-size: 0 !important;
+            color: transparent !important;
+            line-height: 0 !important;
+            position: relative !important;
+            min-height: 35px !important;
+        }
+        /* Insere o seu texto novo no botão */
+        button[data-testid="stBaseButton-secondary"]::after {
+            content: "TXT_BOTAO";
+            font-size: 14px !important;
+            color: #2c3e50 !important;
+            visibility: visible !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: absolute !important;
+            inset: 0 !important;
+        }
 
-            /* 2. O BOTÃO REAL (::after): Aqui aplicamos o design convencional */
-            button[data-testid="stBaseButton-secondary"]::after {
-                content: "TXT_BOTAO";
-                display: flex !important;
-                justify-content: center !important;
-                align-items: center !important;
-                width: 100% !important;
-                height: 100% !important;
-                background-color: white !important;
-                border: 1px solid #d3d3d3 !important;
-                border-radius: 8px !important; /* Bordas arredondadas padrão */
-                color: #2c3e50 !important;
-                font-size: 14px !important;
-                font-weight: 600 !important;
-                visibility: visible !important;
-                cursor: pointer !important;
-                transition: border-color 0.2s, color 0.2s !important;
-            }
-            
-            /* Efeito de Hover para combinar com seu tema LotMax */
-            button[data-testid="stBaseButton-secondary"]:hover::after {
-                border-color: #d33682 !important; /* Cor do seu tema */
-                color: #d33682 !important;        /* Texto também muda de cor */
-            }
+        /* 2. TRADUZ A INSTRUÇÃO (Drag and drop) */
+        [data-testid="stFileUploaderDropzoneInstructions"] div span {
+            display: none !important;
+        }
+        [data-testid="stFileUploaderDropzoneInstructions"] div::before {
+            content: "TXT_INSTR";
+            display: block !important;
+            font-size: 14px !important;
+            color: #31333F !important;
+            visibility: visible !important;
+            margin-bottom: 10px !important;
+        }
 
-            /* 3. TRADUZ AS INSTRUÇÕES (Mantendo seu padrão funcional) */
-            div[data-testid="stFileUploaderDropzoneInstructions"] > div > span {
-                display: none !important;
-            }
-            div[data-testid="stFileUploaderDropzoneInstructions"] > div::before {
-                content: "TXT_INSTR";
-                display: block !important;
-                font-size: 14px !important;
-                color: #555 !important;
-                margin-bottom: 5px !important;
-            }
-            
-            div[data-testid="stFileUploaderDropzoneInstructions"] > div > small {
-                display: none !important;
-            }
-            div[data-testid="stFileUploaderDropzoneInstructions"] > div::after {
-                content: "TXT_LIMIT";
-                display: block !important;
-                font-size: 11px !important;
-                color: #999 !important;
-            }
-        </style>
+        /* 3. TRADUZ O LIMITE (Limit 20MB...) */
+        [data-testid="stFileUploaderDropzoneInstructions"] div small {
+            display: none !important;
+        }
+        [data-testid="stFileUploaderDropzoneInstructions"] div::after {
+            content: "TXT_LIMIT";
+            display: block !important;
+            font-size: 12px !important;
+            color: #808495 !important;
+            visibility: visible !important;
+        }
+    </style>
     """
 
     css_final = (css_template
@@ -370,4 +356,5 @@ if uploaded_file:
 
 else:
     st.info("Aguardando upload do arquivo Excel ou ODS...")
+
 
