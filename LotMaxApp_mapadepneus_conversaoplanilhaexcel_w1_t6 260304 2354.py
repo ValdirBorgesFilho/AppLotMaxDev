@@ -68,26 +68,23 @@ def ler_dados_excel(file, aba):
 
 # --- 4b. MOTOR DA TRADUÇÃO (Apenas a definição) ---
 def estilo_idioma_uploader():
-    config = {
-        "button": "📁 Selecionar arquivo",
-        "instructions": "Arraste seu arquivo aqui.",
-        "limits": "Limite de 20MB • XLSX, XLS, ODS"
-    }
-
+#    config = {
+#        "button": "📁 Selecionar arquivo",
+#        "instructions": "Arraste seu arquivo aqui.",
+#        "limits": "Limite de 20MB • XLSX, XLS, ODS"
+#    }
+    # O seletor agora busca especificamente o componente com a nossa KEY
     css_template = """
     <style>
-        /* 1. TRADUZ O BOTÃO (Browse files) */
-        /* Esconde o texto nativo e prepara o espaço */
-        button[data-testid="stBaseButton-secondary"] {
+        /* 1. Alveja o botão dentro do uploader que tem a nossa KEY */
+        div[data-testid*="meu_uploader_mapa"] button {
             font-size: 0 !important;
             color: transparent !important;
-            line-height: 0 !important;
             position: relative !important;
-            min-height: 35px !important;
         }
-        /* Insere o seu texto novo no botão */
-        button[data-testid="stBaseButton-secondary"]::after {
-            content: "TXT_BOTAO";
+        
+        div[data-testid*="meu_uploader_mapa"] button::after {
+            content: "📁 Selecionar arquivo" !important;
             font-size: 14px !important;
             color: #2c3e50 !important;
             visibility: visible !important;
@@ -98,39 +95,21 @@ def estilo_idioma_uploader():
             inset: 0 !important;
         }
 
-        /* 2. TRADUZ A INSTRUÇÃO (Drag and drop) */
-        [data-testid="stFileUploaderDropzoneInstructions"] div span {
+        /* 2. Traduz as instruções da dropzone da nossa KEY */
+        div[data-testid*="meu_uploader_mapa"] [data-testid="stFileUploaderDropzoneInstructions"] div span {
             display: none !important;
         }
-        [data-testid="stFileUploaderDropzoneInstructions"] div::before {
-            content: "TXT_INSTR";
+        
+        div[data-testid*="meu_uploader_mapa"] [data-testid="stFileUploaderDropzoneInstructions"] div::before {
+            content: "Arraste seu arquivo aqui." !important;
             display: block !important;
             font-size: 14px !important;
-            color: #31333F !important;
-            visibility: visible !important;
-            margin-bottom: 10px !important;
-        }
-
-        /* 3. TRADUZ O LIMITE (Limit 20MB...) */
-        [data-testid="stFileUploaderDropzoneInstructions"] div small {
-            display: none !important;
-        }
-        [data-testid="stFileUploaderDropzoneInstructions"] div::after {
-            content: "TXT_LIMIT";
-            display: block !important;
-            font-size: 12px !important;
-            color: #808495 !important;
+            color: #555 !important;
             visibility: visible !important;
         }
     </style>
     """
-
-    css_final = (css_template
-                 .replace("TXT_BOTAO", config["button"])
-                 .replace("TXT_INSTR", config["instructions"])
-                 .replace("TXT_LIMIT", config["limits"]))
-
-    st.markdown(css_final, unsafe_allow_html=True)
+    st.markdown(css_template, unsafe_allow_html=True)
 
 # --- 4. CSS ---
 st.markdown("""
@@ -200,7 +179,8 @@ st.divider()
 # --- 6. BARRA LATERAL (UPLOAD APENAS) ---
 with st.sidebar:
     st.markdown("### 📂 Gestão de Arquivo")
-    uploaded_file = st.file_uploader("Upload Excel/ODS", type=["xlsx", "xls", "ods"], label_visibility="collapsed")
+#    uploaded_file = st.file_uploader("Upload Excel/ODS", type=["xlsx", "xls", "ods"], label_visibility="collapsed")
+    uploaded_file = st.file_uploader("Gestão de Arquivo", type=['xlsx', 'xls', 'ods'], label_visibility="collapsed", key="meu_uploader_mapa")
 
 # --- 7. LÓGICA CENTRAL ---
 if uploaded_file:
@@ -355,6 +335,7 @@ if uploaded_file:
 
 else:
     st.info("Aguardando upload do arquivo Excel ou ODS...")
+
 
 
 
