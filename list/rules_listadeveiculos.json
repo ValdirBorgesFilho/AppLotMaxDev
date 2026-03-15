@@ -1,5 +1,5 @@
 {
-    "Placa":                    {"critico": true,  "cod": "0-Placa",                "tipo": "placa", "formato": "upper",       "validar": {"vazio": true, "limite": 7, "duplicado": true, "permitir_estoque": false},
+    "Placa":                    {"critico": true,  "cod": "0-Placa",                "tipo": "placa", "formato": "permitir_estoque",       "validar": {"vazio": true, "limite": 7, "duplicado": true, "permitir_estoque": false},
                                                                                     "warning": "❌ Atençao aos indicativos de erros."},
     "Id Frota":                 {"critico": true,  "cod": "0-Placa_ID_Frota",       "tipo": "unico",                                            
                                                                                     "warning": "❌ Não é permitido duplicações do código"},

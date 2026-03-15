@@ -1,5 +1,5 @@
 {
-    "Placa ou Estoque":         {"critico": true,  "cod": "04-Local",               "tipo": "placa", "formato": "upper",       "validar": {"vazio": true, "limite": 7, "duplicado": false, "permitir_estoque": true},      
+    "Placa ou Estoque":         {"critico": true,  "cod": "04-Local",               "tipo": "placa", "formato": "permitir_estoque",       "validar": {"vazio": true, "limite": 7, "duplicado": false, "permitir_estoque": true},      
                                                                                     "warning": "❌"},
     "Marca":                    {"critico": true,  "cod": "00-Marca",               "tipo": "tamanho_minimo",   "limite": 4,                                                
                                                                                     "warning": "❌ Você deve informar a marca com pelo menos 4 caracteres"},
