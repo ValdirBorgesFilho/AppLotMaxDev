@@ -10,6 +10,7 @@ import xlsxwriter
 import importlib
 import csv
 import odf
+import difflib
 
 # Força o 'sys' no namespace global para bibliotecas que falham no importlib do 3.14
 #if 'sys' not in globals():
@@ -175,6 +176,14 @@ try:
 except Exception as e:
     st.error(f"Falha na leitura dos dados, notifique ao suporte App LotMax: {e}")
     st.stop()
+
+# Função auxiliar para detectar "quase" estoque (deve ficar fora do loop)
+def eh_parecido_com_estoque(texto):
+    alvo = "ESTOQUE"
+    texto = str(texto).upper().strip()
+    if texto == alvo or texto == "": return False
+    # Ratio de 0.7 pega "ESLOQUE", "ESTOQ", mas ignora coisas nada a ver
+    return difflib.SequenceMatcher(None, texto, alvo).ratio() >= 0.7
 
 
 ativardebug = False
@@ -462,7 +471,7 @@ if uploaded_file:
                             mask_erro_vazio = mask_vazio if chk_vazio else pd.Series(False, index=dados_validar.index)
                             
                             # Escudo para a palavra ESTOQUE
-                            mask_eh_estoque = (dados_validar.str.upper() == "ESTOQUE") if chk_estoque else pd.Series(False, index=dados_validar.index)
+                            mask_eh_estoque = (dados_validar.str.upper() == "estoque") if chk_estoque else pd.Series(False, index=dados_validar.index)
 
                             # --- 2. SENSORES DE ERRO (AGORA PROTEGIDOS PELO MASK_VAZIO) ---
                             # Erro de Tamanho: Não é vazio, não é estoque e tamanho != limite
@@ -471,10 +480,12 @@ if uploaded_file:
                             # Erro de Duplicidade: Não é vazio, não é estoque e repete
                             mask_duplicado = (~mask_vazio) & (~mask_eh_estoque) & dados_validar.duplicated(keep=False) if chk_repeticao else pd.Series(False, index=dados_validar.index)
 
+
                             # --- 3. RELATÓRIO DE DANOS (O SEU ROTEIRO) ---
                             mask = mask_erro_vazio | mask_tamanho | mask_duplicado
                             erros_locais = []
 
+                            # Analisa grafia quando estoque for permitido
                             if mask_erro_vazio.any(): 
                                 erros_locais.append(f"🚫 Sem informação: {format_rows(mask_erro_vazio)}")
                             
@@ -486,9 +497,16 @@ if uploaded_file:
                                 dups = dados_validar[mask_duplicado].unique().tolist()
                                 erros_locais.append(f"❌ Placa(s) repetida(s): {format_rows(mask_duplicado)} (Ex: {dups[:2]})")
 
-                            if chk_estoque and mask_eh_estoque.any():
-                                # Mantive o seu alerta opcional de itens em estoque
-                                erros_locais.append(f"📦 Itens em ESTOQUE detectados: {format_rows(mask_eh_estoque)}")
+                            if chk_estoque:
+                                mask_suspeita_estoque = dados_validar.apply(eh_parecido_com_estoque)
+                                if mask_suspeita_estoque.any():
+                                    # Isso não trava a gravação (mask principal não muda), apenas avisa o usuário, mostra o conteúdo de dados_puros, sem alterações
+                                    sugestoes = dados_puros[mask_suspeita_estoque].unique().tolist()
+                                    erros_locais.append(f"⚠️ Atenção: Encontramos grafias que parecem 'estoque' mas podem estar erradas: {format_rows(mask_suspeita_estoque)} (Ex: {sugestoes})")
+
+#                            if chk_estoque and mask_eh_estoque.any():
+#                                # Mantive o seu alerta opcional de itens em estoque
+#                                erros_locais.append(f"📦 Itens em ESTOQUE detectados: {format_rows(mask_eh_estoque)}")
 
                             # --- FINALIZAÇÃO ---
                             msg_aviso = "<br>".join(erros_locais)
@@ -566,6 +584,10 @@ if uploaded_file:
                                             df_excel[item] = dado.str.lower()
                                         elif formato == "capital":
                                             df_excel[item] = dado.str.capitalize()
+                                        elif formato == "permitir_esgtoque":                # matriz de regras item do tipo "placa"
+                                            df_excel[item] = dado.str.upper()
+                                            if chk_estoque:
+                                                df_excel[item] = dado.apply(lambda x: "estoque" if str(x).strip().upper() == "ESTOQUE" else str(x).strip().upper())
                                         else:
                                             df_excel[item] = dado
                                     else:
