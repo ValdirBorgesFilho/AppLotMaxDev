@@ -586,7 +586,7 @@ if uploaded_file:
                                 nomes_tecnicos = {item: MATRIZ_REGRAS[item]["cod"] for item in lista_fixa_base}
                                 df_csv = df_csv.rename(columns=nomes_tecnicos)
 
-                                df_csv.insert(0, 'coid', coid)
+                                df_csv.insert(0, '0-Company_ID', coid)
 
                                 if executar == "mapadepneus":
 
