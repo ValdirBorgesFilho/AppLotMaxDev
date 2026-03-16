@@ -331,30 +331,34 @@ st.markdown("""
     .val-warning { color: #f39c12; font-size: 0.65rem; font-weight: 700; margin-top: 2px; line-height: 1.1; }
             
     /* ========================================================================
-       5. COMPACTAÇÃO DA SIDEBAR E BLOCO EMPRESA (ST.INFO)
+       5. COMPACTAÇÃO DA SIDEBAR E BLOCO EMPRESA (ALINHAMENTO AO TOPO)
        ======================================================================== */
     
-    /* Ajuste da faixa azul (Empresa) para centralizar o texto no servidor */
+    /* Ajuste da faixa azul: Alinha o conteúdo ao TOPO */
     [data-testid="stSidebar"] [data-testid="stNotification"] {
         display: flex !important;
         flex-direction: row !important;
-        align-items: center !important; /* Centraliza verticalmente */
-        min-height: 40px !important;
-        padding: 5px 10px !important;
-    }
-    /* Remove o ícone nativo que costuma desalinhair no servidor */
-    [data-testid="stSidebar"] [data-testid="stNotification"] svg { display: none !important; }
-    
-    /* Força o texto para o centro geométrico do bloco */
-    [data-testid="stSidebar"] [data-testid="stNotification"] p {
-        font-size: 0.88rem !important;
-        margin: 0 !important;
-        line-height: 1.1 !important;
-        width: 100% !important;
+        align-items: flex-start !important; /* Alinha o texto no TOPO da caixa */
+        padding: 8px 12px 12px 12px !important; /* Mais respiro embaixo do que em cima */
+        margin-bottom: 4px !important;
+        min-height: 45px !important; /* Mantém uma altura mínima sólida */
+        height: auto !important; /* Permite crescer se o texto for muito longo */
     }
 
-    /* Aproxima os itens na barra lateral para evitar rolagem */
-    [data-testid="stSidebarContent"] { padding-top: 1rem !important; }
+    /* Esconde o ícone nativo */
+    [data-testid="stSidebar"] [data-testid="stNotification"] svg { display: none !important; }
+    
+    /* Ajuste do texto: Garante que ele comece imediatamente no topo */
+    [data-testid="stSidebar"] [data-testid="stNotification"] p {
+        font-size: 0.88rem !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1.2 !important;
+        text-align: left !important;
+    }
+
+    /* Ajustes de compactação para aproximar os itens abaixo */
+    [data-testid="stSidebarContent"] { padding-top: 0.8rem !important; }
     [data-testid="stSidebar"] .stElementContainer { margin-bottom: -0.6rem !important; }
        
 </style>
