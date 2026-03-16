@@ -23,8 +23,8 @@
                                                                                     "warning": "❌ só é permitido valor"},
     "Código comercial":         {"critico": false, "cod": "02-Comercial",           "tipo": "nenhum",
                                                                                     "warning": ""},
-    "DOT fabricado":            {"critico": false, "cod": "02-DOT_Fabricado",       "tipo": "tamanho_fixo",     "limite": 4,                     
-                                                                                    "warning": "⚠️ Tamanho até 4 caracteres"},
+    "DOT fabricado":            {"critico": false, "cod": "02-DOT_Fabricado",       "tipo": "padrao_dot", "formato": "ssaa",  "limite": 4,                     
+                                                                                    "warning": "⚠️ DOT inválido (Semana entre 01 e 52 e Ano entre 00 e 99"},
     "Valor da compra":          {"critico": false, "cod": "02-Valor_compra",        "tipo": "numerico",                                       
                                                                                     "warning": "⚠️ só é permitido valor"}
 }
