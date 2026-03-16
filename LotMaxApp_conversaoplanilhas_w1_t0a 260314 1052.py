@@ -337,11 +337,13 @@ st.markdown("""
     /* BLOCO DE AVISOS (st.info / st.warning / st.error): Torna a caixa elástica */
     [data-testid="stSidebar"] [data-testid="stNotification"] {
         display: flex !important;
-        align-items: flex-start !important; /* Alinha o texto no topo */
-        padding: 8px 12px !important;       /* Respiro interno equilibrado */
+        flex-direction: column !important; /* Texto flui para baixo */
+        align-items: flex-start !important; 
+        padding: 8px 12px !important;       
         margin-bottom: 5px !important;
-        height: auto !important;            /* ESSENCIAL: A caixa cresce com o texto */
-        min-height: 20px !important;        /* Remove a altura mínima forçada */
+        height: auto !important;            /* A caixa cresce com o texto */
+        min-height: fit-content !important; /* Ajusta ao conteúdo */
+        overflow: visible !important;       /* Garante que nada fique escondido */
     }
 
     /* Esconde o ícone nativo (i, ⚠️, ❌) para dar mais largura ao texto */
@@ -349,17 +351,17 @@ st.markdown("""
         display: none !important; 
     }
     
-    /* Ajuste do texto interno: Garante que ele ocupe 100% e quebre linha corretamente */
-    /* Adicionamos o seletor de Markdown para capturar o texto do st.error */
-    [data-testid="stSidebar"] [data-testid="stNotification"] p,
+    /* AJUSTE CRÍTICO: Captura o Markdown interno do st.error para não vazar */
+    [data-testid="stSidebar"] [data-testid="stNotification"] div[data-testid="stMarkdownContainer"],
     [data-testid="stSidebar"] [data-testid="stNotification"] div[data-testid="stMarkdownContainer"] p {
         font-size: 0.85rem !important;
         margin: 0 !important;
         padding: 0 !important;
-        line-height: 1.3 !important;       /* Espaço confortável entre linhas */
+        line-height: 1.3 !important;
         width: 100% !important;
-        word-wrap: break-word !important;   /* Força a quebra de palavras */
-        white-space: normal !important;     /* Garante que o texto flua e quebre */
+        word-wrap: break-word !important;
+        white-space: normal !important;
+        display: block !important; /* Garante que o container se comporte como texto */
     }
 
     /* --- AJUSTES DE ESPAÇO E SUPRESSÃO DO NOME DO ARQUIVO --- */
