@@ -331,39 +331,41 @@ st.markdown("""
     .val-warning { color: #f39c12; font-size: 0.65rem; font-weight: 700; margin-top: 2px; line-height: 1.1; }
             
     /* ========================================================================
-       5. COMPACTAÇÃO DA SIDEBAR E CAIXA DE AVISOS FLEXÍVEL
+       5. COMPACTAÇÃO DA SIDEBAR E CAIXA DE AVISOS FLEXÍVEL (VERSÃO FINAL)
        ======================================================================== */
     
-    /* BLOCO DE AVISOS (st.info / st.warning): Torna a caixa elástica */
+    /* BLOCO DE AVISOS (st.info / st.warning / st.error): Torna a caixa elástica */
     [data-testid="stSidebar"] [data-testid="stNotification"] {
         display: flex !important;
         align-items: flex-start !important; /* Alinha o texto no topo */
         padding: 8px 12px !important;       /* Respiro interno equilibrado */
         margin-bottom: 5px !important;
-        height: auto !important;             /* ESSENCIAL: A caixa cresce com o texto */
-        min-height: 20px !important;         /* Remove a altura mínima forçada */
+        height: auto !important;            /* ESSENCIAL: A caixa cresce com o texto */
+        min-height: 20px !important;        /* Remove a altura mínima forçada */
     }
 
-    /* Esconde o ícone nativo (i) para dar mais largura ao texto */
+    /* Esconde o ícone nativo (i, ⚠️, ❌) para dar mais largura ao texto */
     [data-testid="stSidebar"] [data-testid="stNotification"] svg { 
         display: none !important; 
     }
     
     /* Ajuste do texto interno: Garante que ele ocupe 100% e quebre linha corretamente */
-    [data-testid="stSidebar"] [data-testid="stNotification"] p {
+    /* Adicionamos o seletor de Markdown para capturar o texto do st.error */
+    [data-testid="stSidebar"] [data-testid="stNotification"] p,
+    [data-testid="stSidebar"] [data-testid="stNotification"] div[data-testid="stMarkdownContainer"] p {
         font-size: 0.85rem !important;
         margin: 0 !important;
         padding: 0 !important;
-        line-height: 1.2 !important;      /* Espaço confortável entre linhas */
+        line-height: 1.3 !important;       /* Espaço confortável entre linhas */
         width: 100% !important;
-        word-wrap: break-word !important;  /* Força a quebra de palavras se necessário */
-        white-space: normal !important;    /* Garante que o texto não tente ficar em uma linha só */
+        word-wrap: break-word !important;   /* Força a quebra de palavras */
+        white-space: normal !important;     /* Garante que o texto flua e quebre */
     }
 
     /* --- AJUSTES DE ESPAÇO E SUPRESSÃO DO NOME DO ARQUIVO --- */
     [data-testid="stSidebarContent"] { padding-top: 0.8rem !important; }
 
-    /* Remove o nome do arquivo que "empurra" o layout para baixo */
+    /* Remove o nome do arquivo (34.9KB) que "empurra" o layout para baixo */
     [data-testid="stFileUploaderFileData"], 
     .st-emotion-cache-1ky9v3, 
     .st-emotion-cache-12mif3y,
