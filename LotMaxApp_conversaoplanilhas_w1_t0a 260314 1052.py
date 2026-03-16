@@ -212,35 +212,70 @@ def ler_dados_excel(file, aba):
         return None
 
 # --- 4. CSS ---
+# --- 4. CSS ---
 st.markdown("""
 <style>
-    /* 1. CONFIGURAÇÕES GERAIS DE PÁGINA */
+    /* ========================================================================
+       1. CONFIGURAÇÕES GERAIS DE PÁGINA E INTERFACE
+       ======================================================================== */
+    
+    /* Esconde o menu de hambúrguer e o rodapé nativo do Streamlit */
     #MainMenu {visibility: hidden;} 
     footer {visibility: hidden;} 
     
-    /* Esconde a barra superior mas mantém o botão de expandir lateral (>) funcional */
+    /* Torna o cabeçalho invisível mas mantém o ícone de expandir sidebar (>) */
     header[data-testid="stHeader"] {
         background-color: rgba(0,0,0,0) !important;
         color: rgba(0,0,0,0) !important;
     }
+    
+    /* Garante que o botão de recolher a sidebar esteja visível e clicável */
     button[data-testid="stSidebarCollapseIcon"] {
         visibility: visible !important;
         color: #2c3e50 !important;
         z-index: 99999 !important;
     }
 
-    .block-container { padding-top: 1.5rem !important; padding-bottom: 0rem !important; max-width: 98% !important; }
+    /* Ajusta o espaçamento do corpo da página e largura total */
+    .block-container { 
+        padding-top: 1.5rem !important; 
+        padding-bottom: 0rem !important; 
+        max-width: 98% !important; 
+    }
 
-    /* 2. ESTILIZAÇÃO DOS SELECTBOX (ALTURA E FONTE) */
-    div[data-baseweb="select"] > div { height: 28px !important; min-height: 28px !important; display: flex !important; align-items: center !important; }
-    div[data-baseweb="select"] span { font-size: 0.8rem !important; line-height: 1 !important; }
-
-    ul[role="listbox"] { padding: 0px !important; }
-    ul[role="listbox"] li { padding: 0px !important; margin: 0px !important; min-height: 22px !important; display: flex !important; align-items: center !important; }
-
-    /* 3. TRADUÇÃO E ESTILO DO UPLOADER (GESTÃO DE ARQUIVO) - REFORÇADO PARA DEPLOY */
+    /* ========================================================================
+       2. ESTILIZAÇÃO DOS SELECTBOX (MAPEAMENTO)
+       ======================================================================== */
     
-    /* Moldura tracejada */
+    /* Reduz a altura dos seletores para ganhar espaço vertical */
+    div[data-baseweb="select"] > div { 
+        height: 28px !important; 
+        min-height: 28px !important; 
+        display: flex !important; 
+        align-items: center !important; 
+    }
+    
+    /* Ajusta o tamanho da fonte do mapeamento */
+    div[data-baseweb="select"] span { 
+        font-size: 0.8rem !important; 
+        line-height: 1 !important; 
+    }
+
+    /* Ajusta as opções da lista suspensa (dropdown) */
+    ul[role="listbox"] { padding: 0px !important; }
+    ul[role="listbox"] li { 
+        padding: 0px !important; 
+        margin: 0px !important; 
+        min-height: 22px !important; 
+        display: flex !important; 
+        align-items: center !important; 
+    }
+
+    /* ========================================================================
+       3. CUSTOMIZAÇÃO DO UPLOADER (TRADUÇÃO E ESTILO)
+       ======================================================================== */
+    
+    /* Moldura tracejada do campo de upload */
     [data-testid="stFileUploaderDropzone"] {
         padding: 12px !important;
         border: 1px dashed #d3d3d3 !important;
@@ -249,13 +284,13 @@ st.markdown("""
         margin-top: 5px !important;
     }
 
-    /* Esconde textos nativos (Drag and Drop / Limit) */
+    /* Esconde instruções nativas em inglês (Drag and drop / Limit) */
     [data-testid="stFileUploaderDropzoneInstructions"] div span, 
     [data-testid="stFileUploaderDropzoneInstructions"] div small { 
         display: none !important; 
     }
     
-    /* Insere o texto em Português no lugar do "Drag and drop" */
+    /* Insere o texto traduzido "Arraste e solte..." no lugar do original */
     [data-testid="stFileUploaderDropzoneInstructions"] div::before {
         content: "Arraste e solte o arquivo aqui";
         display: block !important;
@@ -265,16 +300,19 @@ st.markdown("""
         margin-bottom: 5px !important;
     }
 
-    /* Customizar o botão "Browse files" */
-    [data-testid="stFileUploaderDropzone"] button { 
+    /* CUSTOMIZAÇÃO DO BOTÃO (CORREÇÃO PARA SERVIDOR: KIND="SECONDARY") */
+    /* Deixa o texto original transparente para sobreposição */
+    [data-testid="stFileUploaderDropzone"] button[kind="secondary"] { 
         color: transparent !important; 
         position: relative;
         width: 100% !important;
         border: 1px solid #d3d3d3 !important;
         background-color: white !important;
+        height: 32px !important;
     }
     
-    [data-testid="stFileUploaderDropzone"] button::after {
+    /* Injeta o texto "📁 Selecionar arquivo" centralizado no botão secundário */
+    [data-testid="stFileUploaderDropzone"] button[kind="secondary"]::after {
         content: "📁 Selecionar arquivo";
         visibility: visible;
         color: #2c3e50;
@@ -285,50 +323,83 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         left: 0;
+        top: 0;
+        height: 100%;
         font-size: 0.75rem;
     }
 
-    /* 4. LABELS, ERROS E ALERTAS */
-    .mapping-label { font-weight: 700; color: #2c3e50; margin-bottom: 1px; font-size: 0.82rem; display: block; }
+    /* ========================================================================
+       4. LABELS, ERROS E ALERTAS DE CAMPO
+       ======================================================================== */
+    
+    /* Nomes das colunas acima dos selectboxes */
+    .mapping-label { 
+        font-weight: 700; 
+        color: #2c3e50; 
+        margin-bottom: 1px; 
+        font-size: 0.82rem; 
+        display: block; 
+    }
+    
+    /* Aproxima o selectbox do erro abaixo dele */
     div[data-testid="stSelectbox"] { margin-bottom: -10px !important; }
+    
+    /* Cores e fontes para erros críticos e alertas (warnings) */
     .val-error { color: #d63031; font-size: 0.65rem; font-weight: 700; margin-top: 2px; line-height: 1.1; }
     .val-warning { color: #f39c12; font-size: 0.65rem; font-weight: 700; margin-top: 2px; line-height: 1.1; }
             
-    /* 5. AJUSTE FINO DO BLOCO EMPRESA (ST.INFO) E SIDEBAR */
+    /* ========================================================================
+       5. COMPACTAÇÃO DA SIDEBAR E BLOCO EMPRESA (ST.INFO)
+       ======================================================================== */
     
-    /* Centraliza o texto verticalmente dentro do st.info */
+    /* CENTRALIZAÇÃO VERTICAL DO BLOCO EMPRESA: Força o texto no meio da faixa azul */
     [data-testid="stSidebar"] [data-testid="stNotification"] {
         display: flex !important;
-        align-items: center !important; /* Centraliza verticalmente */
+        align-items: center !important; 
         justify-content: flex-start !important;
-        min-height: 38px !important; /* Altura fixa para controle total */
+        min-height: 32px !important;
         padding: 0px 10px !important;
         margin-bottom: 2px !important;
     }
 
-    /* Remove o ícone nativo (o "i") para o texto não ser empurrado */
+    /* Remove o ícone (i) para evitar desalinhamento do texto principal */
     [data-testid="stSidebar"] [data-testid="stNotification"] svg {
         display: none !important;
     }
 
-    /* Ajusta a fonte e remove margens internas que "derrubam" o texto */
+    /* Ajusta fonte da empresa e remove margens internas que "derrubam" o texto */
     [data-testid="stSidebar"] [data-testid="stNotification"] p {
         font-size: 0.88rem !important;
         margin: 0 !important;
         padding: 0 !important;
-        line-height: 1.2 !important;
+        line-height: 1.1 !important;
     }
 
-    /* --- OUTROS AJUSTES DE ESPAÇO --- */
+    /* Remove o vácuo gigante no topo da barra lateral */
     [data-testid="stSidebarContent"] { padding-top: 1rem !important; }
-    [data-testid="stFileUploaderFileData"] { display: none !important; }
-    div[data-testid="stFileUploader"] { margin-top: -8px !important; margin-bottom: -15px !important; }
+
+    /* MINI-INFO DO ARQUIVO: Deixa o nome/tamanho do arquivo (34.9KB) discreto e pequeno */
+    [data-testid="stFileUploaderFileData"] {
+        padding: 2px 6px !important;
+        min-height: 18px !important;   
+        background-color: #f8f9fa !important;
+        margin-top: 2px !important;
+    }
+    [data-testid="stFileUploaderFileData"] div {
+        font-size: 0.68rem !important;
+        line-height: 1 !important;
+    }
+
+    /* Reduz o espaço entre os componentes da sidebar (Efeito Sanfona) */
     [data-testid="stSidebar"] .stElementContainer { margin-bottom: -0.5rem !important; }
+
+    /* Encurta as margens do st.divider nativo */
+    [data-testid="stSidebar"] hr {
+        margin: 10px 0px !important;
+    }
        
 </style>
 """, unsafe_allow_html=True)
-
-
 
 
 # --- 5. CABEÇALHO ---
