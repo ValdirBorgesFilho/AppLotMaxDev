@@ -331,55 +331,49 @@ st.markdown("""
     .val-warning { color: #f39c12; font-size: 0.65rem; font-weight: 700; margin-top: 2px; line-height: 1.1; }
             
     /* ========================================================================
-       5. COMPACTAÇÃO DA SIDEBAR E BLOCO EMPRESA (AJUSTE FINAL DEPLOY)
+       5. COMPACTAÇÃO DA SIDEBAR E CAIXA DE AVISOS FLEXÍVEL
        ======================================================================== */
     
-    /* BLOCO EMPRESA: Garante o texto "ancorado" no TOPO da faixa azul */
+    /* BLOCO DE AVISOS (st.info / st.warning): Torna a caixa elástica */
     [data-testid="stSidebar"] [data-testid="stNotification"] {
         display: flex !important;
-        align-items: flex-start !important; /* TEXTO NO TOPO */
-        padding: 5px 10px 10px 10px !important; /* Menos espaço em cima, mais embaixo */
-        min-height: 40px !important;
-        height: auto !important;
-        margin-bottom: 2px !important;
+        align-items: flex-start !important; /* Alinha o texto no topo */
+        padding: 8px 12px !important;       /* Respiro interno equilibrado */
+        margin-bottom: 5px !important;
+        height: auto !important;             /* ESSENCIAL: A caixa cresce com o texto */
+        min-height: 20px !important;         /* Remove a altura mínima forçada */
     }
 
-    /* Esconde o ícone nativo (i) para não empurrar o texto para baixo */
+    /* Esconde o ícone nativo (i) para dar mais largura ao texto */
     [data-testid="stSidebar"] [data-testid="stNotification"] svg { 
         display: none !important; 
     }
     
-    /* Ajuste da fonte da Empresa: inicia no topo sem margens internas */
+    /* Ajuste do texto interno: Garante que ele ocupe 100% e quebre linha corretamente */
     [data-testid="stSidebar"] [data-testid="stNotification"] p {
-        font-size: 0.88rem !important;
+        font-size: 0.85rem !important;
         margin: 0 !important;
         padding: 0 !important;
-        line-height: 1.1 !important;
-        text-align: left !important;
+        line-height: 1.2 !important;      /* Espaço confortável entre linhas */
+        width: 100% !important;
+        word-wrap: break-word !important;  /* Força a quebra de palavras se necessário */
+        white-space: normal !important;    /* Garante que o texto não tente ficar em uma linha só */
     }
 
-    /* --- AJUSTES DE ESPAÇO E SUPRESSÃO DO ARQUIVO --- */
-    
-    /* Remove o vácuo gigante no topo da barra lateral */
+    /* --- AJUSTES DE ESPAÇO E SUPRESSÃO DO NOME DO ARQUIVO --- */
     [data-testid="stSidebarContent"] { padding-top: 0.8rem !important; }
 
-    /* SUPRESSÃO TOTAL DO NOME DO ARQUIVO (34.9KB) - REFORÇADO PARA CLOUD */
-    /* Atacamos o ID do componente e as classes de cache do servidor */
+    /* Remove o nome do arquivo que "empurra" o layout para baixo */
     [data-testid="stFileUploaderFileData"], 
     .st-emotion-cache-1ky9v3, 
     .st-emotion-cache-12mif3y,
     div[data-testid="stFileUploader"] > section + div { 
         display: none !important; 
-        height: 0px !important;
-        margin: 0px !important;
-        padding: 0px !important;
     }
 
-    /* Aproximação dos componentes para evitar rolagem desnecessária */
+    /* Aproximação dos componentes */
     div[data-testid="stFileUploader"] { margin-top: -10px !important; margin-bottom: -15px !important; }
     [data-testid="stSidebar"] .stElementContainer { margin-bottom: -0.6rem !important; }
-
-    /* Encurta as margens do st.divider nativo */
     [data-testid="stSidebar"] hr { margin: 10px 0px !important; }
        
 </style>
