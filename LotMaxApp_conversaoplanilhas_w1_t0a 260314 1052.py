@@ -212,7 +212,6 @@ def ler_dados_excel(file, aba):
         return None
 
 # --- 4. CSS ---
-# --- 4. CSS ---
 st.markdown("""
 <style>
     /* ========================================================================
@@ -272,60 +271,43 @@ st.markdown("""
     }
 
     /* ========================================================================
-       3. CUSTOMIZAÇÃO DO UPLOADER (TRADUÇÃO E ESTILO)
+       3. CUSTOMIZAÇÃO DO UPLOADER (BLINDADO PARA SERVIDOR/DEPLOY)
        ======================================================================== */
     
-    /* Moldura tracejada do campo de upload */
-    [data-testid="stFileUploaderDropzone"] {
-        padding: 12px !important;
-        border: 1px dashed #d3d3d3 !important;
-        border-radius: 8px !important;
-        background-color: #f9f9f9 !important;
-        margin-top: 5px !important;
-    }
-
-    /* Esconde instruções nativas em inglês (Drag and drop / Limit) */
-    [data-testid="stFileUploaderDropzoneInstructions"] div span, 
-    [data-testid="stFileUploaderDropzoneInstructions"] div small { 
-        display: none !important; 
-    }
-    
-    /* Insere o texto traduzido "Arraste e solte..." no lugar do original */
-    [data-testid="stFileUploaderDropzoneInstructions"] div::before {
+    /* 1. Tradução do "Drag and drop" */
+    [data-testid="stFileUploaderDropzoneInstructions"] > div > span { display: none !important; }
+    [data-testid="stFileUploaderDropzoneInstructions"] > div::before {
         content: "Arraste e solte o arquivo aqui";
         display: block !important;
-        font-size: 13px !important;
+        font-size: 0.8rem !important;
         color: #555 !important;
-        visibility: visible !important;
-        margin-bottom: 5px !important;
     }
+    
+    /* 2. Esconde o texto do limite de tamanho (20MB) */
+    [data-testid="stFileUploaderDropzoneInstructions"] > div > small { display: none !important; }
 
-    /* CUSTOMIZAÇÃO DO BOTÃO (CORREÇÃO PARA SERVIDOR: KIND="SECONDARY") */
-    /* Deixa o texto original transparente para sobreposição */
-    [data-testid="stFileUploaderDropzone"] button[kind="secondary"] { 
+    /* 3. Tradução do Botão (Independente de ser 'secondary' ou não) */
+    [data-testid="stFileUploaderDropzone"] button {
         color: transparent !important; 
-        position: relative;
+        position: relative !important;
         width: 100% !important;
         border: 1px solid #d3d3d3 !important;
         background-color: white !important;
-        height: 32px !important;
+        height: 34px !important;
     }
     
-    /* Injeta o texto "📁 Selecionar arquivo" centralizado no botão secundário */
-    [data-testid="stFileUploaderDropzone"] button[kind="secondary"]::after {
+    /* Injeta o texto novo exatamente no centro do botão */
+    [data-testid="stFileUploaderDropzone"] button::after {
         content: "📁 Selecionar arquivo";
-        visibility: visible;
-        color: #2c3e50;
-        font-weight: 600;
-        position: absolute;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        left: 0;
-        top: 0;
-        height: 100%;
-        font-size: 0.75rem;
+        visibility: visible !important;
+        color: #2c3e50 !important;
+        font-weight: 600 !important;
+        position: absolute !important;
+        left: 0; top: 0; width: 100%; height: 100%;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 0.75rem !important;
     }
 
     /* ========================================================================
@@ -352,54 +334,32 @@ st.markdown("""
        5. COMPACTAÇÃO DA SIDEBAR E BLOCO EMPRESA (ST.INFO)
        ======================================================================== */
     
-    /* CENTRALIZAÇÃO VERTICAL DO BLOCO EMPRESA: Força o texto no meio da faixa azul */
+    /* Ajuste da faixa azul (Empresa) para centralizar o texto no servidor */
     [data-testid="stSidebar"] [data-testid="stNotification"] {
         display: flex !important;
-        align-items: center !important; 
-        justify-content: flex-start !important;
-        min-height: 32px !important;
-        padding: 0px 10px !important;
-        margin-bottom: 2px !important;
+        flex-direction: row !important;
+        align-items: center !important; /* Centraliza verticalmente */
+        min-height: 40px !important;
+        padding: 5px 10px !important;
     }
-
-    /* Remove o ícone (i) para evitar desalinhamento do texto principal */
-    [data-testid="stSidebar"] [data-testid="stNotification"] svg {
-        display: none !important;
-    }
-
-    /* Ajusta fonte da empresa e remove margens internas que "derrubam" o texto */
+    /* Remove o ícone nativo que costuma desalinhair no servidor */
+    [data-testid="stSidebar"] [data-testid="stNotification"] svg { display: none !important; }
+    
+    /* Força o texto para o centro geométrico do bloco */
     [data-testid="stSidebar"] [data-testid="stNotification"] p {
         font-size: 0.88rem !important;
         margin: 0 !important;
-        padding: 0 !important;
         line-height: 1.1 !important;
+        width: 100% !important;
     }
 
-    /* Remove o vácuo gigante no topo da barra lateral */
+    /* Aproxima os itens na barra lateral para evitar rolagem */
     [data-testid="stSidebarContent"] { padding-top: 1rem !important; }
-
-    /* MINI-INFO DO ARQUIVO: Deixa o nome/tamanho do arquivo (34.9KB) discreto e pequeno */
-    [data-testid="stFileUploaderFileData"] {
-        padding: 2px 6px !important;
-        min-height: 18px !important;   
-        background-color: #f8f9fa !important;
-        margin-top: 2px !important;
-    }
-    [data-testid="stFileUploaderFileData"] div {
-        font-size: 0.68rem !important;
-        line-height: 1 !important;
-    }
-
-    /* Reduz o espaço entre os componentes da sidebar (Efeito Sanfona) */
-    [data-testid="stSidebar"] .stElementContainer { margin-bottom: -0.5rem !important; }
-
-    /* Encurta as margens do st.divider nativo */
-    [data-testid="stSidebar"] hr {
-        margin: 10px 0px !important;
-    }
+    [data-testid="stSidebar"] .stElementContainer { margin-bottom: -0.6rem !important; }
        
 </style>
 """, unsafe_allow_html=True)
+
 
 
 # --- 5. CABEÇALHO ---
