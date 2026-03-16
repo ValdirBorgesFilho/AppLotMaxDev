@@ -331,35 +331,56 @@ st.markdown("""
     .val-warning { color: #f39c12; font-size: 0.65rem; font-weight: 700; margin-top: 2px; line-height: 1.1; }
             
     /* ========================================================================
-       5. COMPACTAÇÃO DA SIDEBAR E BLOCO EMPRESA (ALINHAMENTO AO TOPO)
+       5. COMPACTAÇÃO DA SIDEBAR E BLOCO EMPRESA (AJUSTE FINAL DEPLOY)
        ======================================================================== */
     
-    /* Ajuste da faixa azul: Alinha o conteúdo ao TOPO */
+    /* BLOCO EMPRESA: Garante o texto "ancorado" no TOPO da faixa azul */
     [data-testid="stSidebar"] [data-testid="stNotification"] {
         display: flex !important;
-        flex-direction: row !important;
-        align-items: flex-start !important; /* Alinha o texto no TOPO da caixa */
-        padding: 8px 12px 12px 12px !important; /* Mais respiro embaixo do que em cima */
-        margin-bottom: 4px !important;
-        min-height: 45px !important; /* Mantém uma altura mínima sólida */
-        height: auto !important; /* Permite crescer se o texto for muito longo */
+        align-items: flex-start !important; /* TEXTO NO TOPO */
+        padding: 5px 10px 10px 10px !important; /* Menos espaço em cima, mais embaixo */
+        min-height: 40px !important;
+        height: auto !important;
+        margin-bottom: 2px !important;
     }
 
-    /* Esconde o ícone nativo */
-    [data-testid="stSidebar"] [data-testid="stNotification"] svg { display: none !important; }
+    /* Esconde o ícone nativo (i) para não empurrar o texto para baixo */
+    [data-testid="stSidebar"] [data-testid="stNotification"] svg { 
+        display: none !important; 
+    }
     
-    /* Ajuste do texto: Garante que ele comece imediatamente no topo */
+    /* Ajuste da fonte da Empresa: inicia no topo sem margens internas */
     [data-testid="stSidebar"] [data-testid="stNotification"] p {
-        font-size: 0.88rem !important; 
+        font-size: 0.88rem !important;
         margin: 0 !important;
         padding: 0 !important;
-        line-height: 1.2 !important;
+        line-height: 1.1 !important;
         text-align: left !important;
     }
 
-    /* Ajustes de compactação para aproximar os itens abaixo */
+    /* --- AJUSTES DE ESPAÇO E SUPRESSÃO DO ARQUIVO --- */
+    
+    /* Remove o vácuo gigante no topo da barra lateral */
     [data-testid="stSidebarContent"] { padding-top: 0.8rem !important; }
+
+    /* SUPRESSÃO TOTAL DO NOME DO ARQUIVO (34.9KB) - REFORÇADO PARA CLOUD */
+    /* Atacamos o ID do componente e as classes de cache do servidor */
+    [data-testid="stFileUploaderFileData"], 
+    .st-emotion-cache-1ky9v3, 
+    .st-emotion-cache-12mif3y,
+    div[data-testid="stFileUploader"] > section + div { 
+        display: none !important; 
+        height: 0px !important;
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+
+    /* Aproximação dos componentes para evitar rolagem desnecessária */
+    div[data-testid="stFileUploader"] { margin-top: -10px !important; margin-bottom: -15px !important; }
     [data-testid="stSidebar"] .stElementContainer { margin-bottom: -0.6rem !important; }
+
+    /* Encurta as margens do st.divider nativo */
+    [data-testid="stSidebar"] hr { margin: 10px 0px !important; }
        
 </style>
 """, unsafe_allow_html=True)
