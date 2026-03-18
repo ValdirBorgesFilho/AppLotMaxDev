@@ -294,7 +294,7 @@ except Exception as e:
     st.error(f"Falha na leitura dos dados: {e}")
     st.stop()
 
-ativardebug = True                         # True mostra o conteúdo da matriz, o padrão é false
+ativardebug = False                         # True mostra o conteúdo da matriz, o padrão é false
 if ativardebug:
 # --- INSPEÇÃO TÉCNICA (DEBUG) ---
     with st.expander("🔍 Ver Estrutura da Matriz (Debug)"):
