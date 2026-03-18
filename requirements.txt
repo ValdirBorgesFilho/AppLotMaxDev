@@ -3,5 +3,5 @@ altair==4.2.2
 pandas
 xlsxwriter
 openpyxl
-odfpy
+odfpy>=1.4.1
 pdfplumber
