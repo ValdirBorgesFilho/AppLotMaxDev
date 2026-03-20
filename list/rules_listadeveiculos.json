@@ -56,7 +56,7 @@
     "Capacidade baterias":      {"critico": false, "cod": "03-4_Bateria_capacidade",        "tipo": "numerico", 
                                                                                             "warning": "⚠️ só é permitido valor"},
     "Pneu Single":              {"critico": false, "cod": "25-Pneu_single_yes",             "tipo": "valido",  "formato": "lower",       "valores": ["sim"],  
-                                                                                            "warning": "⚠️ só é permitido sim ou vázio"},\
+                                                                                            "warning": "⚠️ só é permitido sim ou vázio"},
     "Implemento":               {"critico": false, "cod": "10-1_Implemento",                "tipo": "lista",                    "valores": "externalfile-10-1_Implemento",
                                                                                             "warning": "⚠️"},
     "Implemento Comprimento":   {"critico": false, "cod": "10-2_Implemento_Comprimento",    "tipo": "numerico",                                      
