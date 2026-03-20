@@ -63,7 +63,7 @@
     /* 1. Tradução do "Drag and drop" */
     [data-testid="stFileUploaderDropzoneInstructions"] > div > span { display: none !important; }
     [data-testid="stFileUploaderDropzoneInstructions"] > div::before {
-        content: "Arraste e solte o arquivo aqui";
+        content: "Arraste e solte o arquivo aqui" !important;
         display: block !important;
         font-size: 0.8rem !important;
         color: #555 !important;
