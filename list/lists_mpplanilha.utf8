@@ -4,18 +4,19 @@ SUV
 Pickup - Caminhonete
 Minivan
 Furgao
-Furgao 4 pneus
-Minibus 2 pneus
-Minibus 4 pneus
-Van de Cargas
-Van de Passageiros
-VUC
-VLC
+Furgao rodado duplo
+Minibus
+Minibus rodado duplo
+Van de cargas
+Van de passageiros
+VUC/VLC
+VUC/VLC rodado duplo
 Onibus Convencional 2 eixos
 Onibus Trucado 2 eixos direcionais
 Onibus Trucado 3 eixos
 Onibus Double Deck 3 eixos
 Onibus Double Deck 4 eixos
+Caminhao Toco
 Caminhao Truck
 Caminhao Bitruck
 Cavalo Toco
@@ -81,7 +82,7 @@ single
 misto
 liso-reboque
 comercial leve
-comercial médiopasseio
+comercial médio passeio
 
 [01-Aplicacao]
 pesado

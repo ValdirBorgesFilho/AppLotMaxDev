@@ -18,7 +18,7 @@ import difflib
 # --- CONFIGURAÇÃO DE BASE ---
 PASTA_DA_LIB = Path(__file__).parent
 
-def log_operacao(mensagem, tipo="info"):
+def log_operacao(identificador="comum", mensagem= "vazia", tipo="info"):
     agora = datetime.now()
     data_hora = agora.strftime("%d/%m/%Y %H:%M:%S")
     data_arquivo = agora.strftime("%Y%m%d")
@@ -42,8 +42,8 @@ def log_operacao(mensagem, tipo="info"):
     pasta_logs = Path("logs")
     pasta_logs.mkdir(parents=True, exist_ok=True)
     
-    caminho_log = pasta_logs / f"log_{data_arquivo}.txt"
-    linha_log = f"[{data_hora}] [{tipo}] [{nome_app}:{linha_codigo}] {mensagem}\n"
+    caminho_log = pasta_logs / f"log_{identificador}_{data_arquivo}.txt"
+    linha_log = f"[{data_hora}] [{tipo}] [{identificador} {nome_app}:{linha_codigo}] {mensagem}\n"
     
     with open(caminho_log, "a", encoding="utf-8") as f:
         f.write(linha_log)
@@ -244,6 +244,10 @@ def carregar_matriz(matriz, externalfile, debug=False):
         if isinstance(elemento, dict):
             novo_dict = {}
             for k, v in elemento.items():
+                print(f"passei aqui item {k}")
+                print(f"item V {v}")
+                print(f"item elemento {elemento}")
+                print(f"item novo_dict {novo_dict}")
                 if isinstance(v, str) and v.startswith("externalfile-"):
                     bloco_alvo = v.replace("externalfile-", "").strip()
                     
@@ -255,6 +259,14 @@ def carregar_matriz(matriz, externalfile, debug=False):
                     else:
                         log_operacao(f"Bloco [{bloco_alvo}] não localizado em {arquivo_listas.name}", "Error")
                         novo_dict[k] = []
+                elif v == "anointervalo":
+ 
+                    # Calcula os anos REAIS baseados no deslocamento do JSON e sobrescreve os valores antes de eles serem lidos novamente e serem gerados na posição e com os valores atualizados
+                    ano_atual = datetime.now().year                                             ## atenção a datetime com a condição do import, da forma como está na lib deve ser desta forma
+                    elemento["ano_minimo"] = ano_atual + elemento.get("ano_minimo",0)
+                    elemento["ano_maximo"] = ano_atual + elemento.get("ano_maximo",0)
+                    elemento["warning"] = f"{elemento.get('warning')} {elemento['ano_minimo']} e {elemento['ano_maximo']}"
+                    novo_dict[k] = processar_recursivo(v)
                 else:
                     novo_dict[k] = processar_recursivo(v)
             return novo_dict
