@@ -1,0 +1,182 @@
+
+    /* Estilo criado para padrão de pagina para ...  */
+    /* ========================================================================
+       1. CONFIGURAÇÕES GERAIS DE PÁGINA E INTERFACE
+       ======================================================================== */
+
+    /* Remove o ícone de link/âncora em qualquer cabeçalho ou markdown */
+    [data-testid="stHeaderActionElements"], 
+        .header-anchor,
+    [data-testid="stMarkdownContainer"] a.header-anchor {
+        display: none !important;
+    }
+
+    /* Garante que o hover não mostre o ícone novamente */
+    h1:hover a.header-anchor, 
+    h2:hover a.header-anchor, 
+    h3:hover a.header-anchor {
+        display: none !important;
+    }
+    
+    /* Esconde o menu de hambúrguer e o rodapé nativo do Streamlit */
+    #MainMenu {visibility: hidden;} 
+    footer {visibility: hidden;} 
+    
+    /* Torna o cabeçalho invisível mas mantém o ícone de expandir sidebar (>) */
+    header[data-testid="stHeader"] {
+        background-color: rgba(0,0,0,0) !important;
+        color: rgba(0,0,0,0) !important;
+    }
+    
+    /* Garante que o botão de recolher a sidebar esteja visível e clicável */
+    button[data-testid="stSidebarCollapseIcon"] {
+        visibility: visible !important;
+        color: #2c3e50 !important;
+        z-index: 99999 !important;
+    }
+
+    /* Ajusta o espaçamento do corpo da página e largura total */
+    .block-container { 
+        padding-top: 1.5rem !important; 
+        padding-bottom: 0rem !important; 
+        max-width: 98% !important; 
+    }
+
+    /* ========================================================================
+       2. ESTILIZAÇÃO DOS SELECTBOX (MAPEAMENTO)
+       ======================================================================== */
+    
+    /* Reduz a altura dos seletores para ganhar espaço vertical */
+    div[data-baseweb="select"] > div { 
+        height: 28px !important; 
+        min-height: 28px !important; 
+        display: flex !important; 
+        align-items: center !important; 
+    }
+    
+    /* Ajusta o tamanho da fonte do mapeamento */
+    div[data-baseweb="select"] span { 
+        font-size: 0.8rem !important; 
+        line-height: 1 !important; 
+    }
+
+    /* Ajusta as opções da lista suspensa (dropdown) */
+    ul[role="listbox"] { padding: 0px !important; }
+    ul[role="listbox"] li { 
+        padding: 0px !important; 
+        margin: 0px !important; 
+        min-height: 22px !important; 
+        display: flex !important; 
+        align-items: center !important; 
+    }
+
+    /* ========================================================================
+       3. CUSTOMIZAÇÃO DO UPLOADER (BLINDADO PARA SERVIDOR/DEPLOY)
+       ======================================================================== */
+    
+    /* 1. Tradução do "Drag and drop" */
+    [data-testid="stFileUploaderDropzoneInstructions"] > div > span { display: none !important; }
+    [data-testid="stFileUploaderDropzoneInstructions"] > div::before {
+        content: "Arraste e solte o arquivo aqui";
+        display: block !important;
+        font-size: 0.8rem !important;
+        color: #555 !important;
+    }
+    
+    /* 2. Esconde o texto do limite de tamanho (20MB) */
+    [data-testid="stFileUploaderDropzoneInstructions"] > div > small { display: none !important; }
+
+    /* 3. Tradução do Botão (Independente de ser 'secondary' ou não) */
+    [data-testid="stFileUploaderDropzone"] button {
+        color: transparent !important; 
+        position: relative !important;
+        width: 100% !important;
+        border: 1px solid #d3d3d3 !important;
+        background-color: white !important;
+        height: 34px !important;
+    }
+    
+    /* Injeta o texto novo exatamente no centro do botão */
+    [data-testid="stFileUploaderDropzone"] button::after {
+        content: "📁 Selecionar arquivo";
+        visibility: visible !important;
+        color: #2c3e50 !important;
+        font-weight: 600 !important;
+        position: absolute !important;
+        left: 0; top: 0; width: 100%; height: 100%;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 0.75rem !important;
+    }
+
+    /* ========================================================================
+       4. LABELS, ERROS E ALERTAS DE CAMPO
+       ======================================================================== */
+    
+    /* Nomes das colunas acima dos selectboxes */
+    .mapping-label { 
+        font-weight: 700; 
+        color: #2c3e50; 
+        margin-bottom: 1px; 
+        font-size: 0.82rem; 
+        display: block; 
+    }
+    
+    /* Aproxima o selectbox do erro abaixo dele */
+    div[data-testid="stSelectbox"] { margin-bottom: -10px !important; }
+    
+    /* Cores e fontes para erros críticos e alertas (warnings) */
+    .val-error { color: #d63031; font-size: 0.65rem; font-weight: 700; margin-top: 2px; line-height: 1.1; }
+    .val-warning { color: #f39c12; font-size: 0.65rem; font-weight: 700; margin-top: 2px; line-height: 1.1; }
+            
+    /* ========================================================================
+       5. COMPACTAÇÃO DA SIDEBAR E CAIXA DE AVISOS FLEXÍVEL (VERSÃO FINAL)
+       ======================================================================== */
+    
+    /* BLOCO DE AVISOS (st.info / st.warning / st.error): Torna a caixa elástica */
+    [data-testid="stSidebar"] [data-testid="stNotification"] {
+        display: flex !important;
+        flex-direction: column !important; /* Texto flui para baixo */
+        align-items: flex-start !important; 
+        padding: 8px 12px !important;       
+        margin-bottom: 5px !important;
+        height: auto !important;            /* A caixa cresce com o texto */
+        min-height: fit-content !important; /* Ajusta ao conteúdo */
+        overflow: visible !important;       /* Garante que nada fique escondido */
+    }
+
+    /* Esconde o ícone nativo (i, ⚠️, ❌) para dar mais largura ao texto */
+    [data-testid="stSidebar"] [data-testid="stNotification"] svg { 
+        display: none !important; 
+    }
+    
+    /* AJUSTE CRÍTICO: Captura o Markdown interno do st.error para não vazar */
+    [data-testid="stSidebar"] [data-testid="stNotification"] div[data-testid="stMarkdownContainer"],
+    [data-testid="stSidebar"] [data-testid="stNotification"] div[data-testid="stMarkdownContainer"] p {
+        font-size: 0.85rem !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1.3 !important;
+        width: 100% !important;
+        word-wrap: break-word !important;
+        white-space: normal !important;
+        display: block !important; /* Garante que o container se comporte como texto */
+    }
+
+    /* --- AJUSTES DE ESPAÇO E SUPRESSÃO DO NOME DO ARQUIVO --- */
+    [data-testid="stSidebarContent"] { padding-top: 0.8rem !important; }
+
+    /* Remove o nome do arquivo (34.9KB) que "empurra" o layout para baixo */
+    [data-testid="stFileUploaderFileData"], 
+    .st-emotion-cache-1ky9v3, 
+    .st-emotion-cache-12mif3y,
+    div[data-testid="stFileUploader"] > section + div { 
+        display: none !important; 
+    }
+
+    /* Aproximação dos componentes */
+    div[data-testid="stFileUploader"] { margin-top: -10px !important; margin-bottom: -15px !important; }
+    [data-testid="stSidebar"] .stElementContainer { margin-bottom: -0.6rem !important; }
+    [data-testid="stSidebar"] hr { margin: 10px 0px !important; }
+       

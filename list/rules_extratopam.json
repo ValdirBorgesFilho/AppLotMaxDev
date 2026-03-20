@@ -1,5 +1,5 @@
 {
-    "Sem Parar":                {"formatos": ["xls?", "odf"],       "assinatura": "assinatura_semparar", "chavebusca": "externalfile",  
+    "Sem Parar":                {"formatos": ["xls?", "odf"],       "assinatura": "assinatura_semparar", "chavebusca": "externalfile-assinatura_semparar",  
                                                                     "tipo": "leituraabas",
                                                                     "abasuso":  {"pedagio_aba": "PASSAGENS PEDÁGIO" , "estacto_aba": "PASSAGENS ESTACIONAMENTO"},
                                                                     "COID":             {"ler": "parametro", "sai":"0-Company_ID"},    
@@ -16,7 +16,7 @@
                                                                     "warning": "⚠️ Inconsistência mo conteúdo"
                                 },
 
-    "Conect Car":               {"formatos": ["xls?", "odf"],      "assinatura": "assinatura_conectcar", "chavebusca": "externalfile",
+    "Conect Car":               {"formatos": ["xls?", "odf"],      "assinatura": "assinatura_conectcar", "chavebusca": "externalfile-assinatura_conectcar",
                                                                     "tipo": "mesclado",
                                                                     "abasuso":  "Planilha1",
                                                                     "pontoinicio": "Transações",
@@ -34,7 +34,7 @@
                                                                     "warning": "⚠️ Inconsistência mo conteúdo"
                                 },
 
-    "Veloe":                    {"formatos": ["pdf"],               "assinatura": "assinatura_veloe", "chavebusca": "externalfile",
+    "Veloe":                    {"formatos": ["pdf"],               "assinatura": "assinatura_veloe", "chavebusca": "externalfile-assinatura_veloe",
                                                                     "tipo": "hibrido_pdf_regex",
                                                                     "pontoinicio": "Pedágio",
                                                                     "COID":             {"ler": "parametro", "sai": "0-Company_ID"},
