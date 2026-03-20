@@ -1,6 +1,6 @@
 streamlit==1.31.0
 altair==4.2.2
-pandas
+pandas>=2.2.0
 xlsxwriter
 openpyxl
 odfpy>=1.4.1
